@@ -1,0 +1,118 @@
+ <html>
+    <head>
+        <title>Power Tools</title>
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link rel="icon" type="img/ico" href="favicon.ico">
+        <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+        </script>
+        <script type="text/javascript" src="js/semantic.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/helpers.js"></script>
+ 
+    </head>
+    <body>
+        <div class="ui container">
+          <div class="ui inverted segment" style="margin: 1em 0;">
+              <div class="ui inverted secondary pointing menu">
+                <a class="item" href="home.html">Home</a>
+                <a class="active item">Move Labels</a>
+                <a class="item coming-soon" data-content="Coming soon" data-position="bottom center">Outlook Add-in</a>
+                <a class="item coming-soon" data-content="Coming soon" data-position="bottom center">Notifications</a>
+                <a class="item coming-soon" data-content="Coming soon" data-position="bottom center">Messaging</a>
+              </div>
+          </div>
+          <h3 class="ui header">Generate Move Labels</h3>
+          <p>The move labels tool allows you to generate a set of Avery formatted move labels you can attach to moving boxes!</p>
+          <p>Simply export an Excel/XLSX move report from OfficeSpace, upload your moves .XLSX file and the tool generates an Avery formatted PDF file you can use to print your move labels.</p>
+          <div class="ui segment" style="margin:2em 0;">
+              <div class="ui selection dropdown" style="margin-right: 1em;">
+                  <input type="hidden" name="avery" id="avery-select">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Avery Template</div>
+                  <div class="menu">
+                    <div class="item" data-value="5160">Avery 5160</div>
+                    <div class="item" data-value="94200">Avery 94200</div>
+                  </div>
+              </div>
+              <div class="ui selection dropdown" style="margin-right: 1em;">
+                  <input type="hidden" name="num-labels" id="num-labels-select">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Number of Labels per Move</div>
+                  <div class="menu">
+                    <div class="item" data-value="1">1 label per move</div>
+                    <div class="item" data-value="2">2 labels per move</div>
+                    <div class="item" data-value="3">3 labels per move</div>
+                    <div class="item" data-value="4">4 labels per move</div>
+                    <div class="item" data-value="5">5 labels per move</div>
+                    <div class="item" data-value="6">6 labels per move</div>
+                    <div class="item" data-value="7">7 labels per move</div>
+                    <div class="item" data-value="8">8 labels per move</div>
+                  </div>
+              </div>
+              <!-- <div class="ui checkbox" style="margin-right: 1em;">
+                  <input type="checkbox" name="new-move">
+                  <label>Include new moves</label>
+              </div>
+              <div class="ui checkbox" style="margin-right: 1em;">
+                  <input type="checkbox" name="vacate">
+                  <label>Include vacate moves</label>
+              </div> -->
+              <div class="file-button-wrapper" style="margin-right: 1em; display: inline;">
+                <label for="file-input" class="ui labeled icon positive button disabled" id="upload-button">
+                    <i class="upload icon"></i>
+                    Upload and convert
+                </label>
+                <input type="file" id="file-input" multiple oninput="onUploadXlsxButtonClick(this.files)" style="display: none">
+            </div>
+              <div class="processing-status" style="display: none;">
+                <div class="ui active inline loader small"></div>
+                <span style="margin-left: 0.2em;"><i>Processing...</i></span>
+              </div>
+              <div class="moves-malformed" style="display: none;">
+                <i class="exclamation circle icon" style="color: red;"></i>
+                <span style="margin-left: 0.2em;"><i>Your moves XLSX file appears malformed, please check and reupload.</i></span>
+              </div>
+          </div>
+          <h3 class="ui header">Instructions</h3>
+          <ol>
+            <li>Within OfficeSpace Move reports, generate a new move report and export/download the report to your computer. (XLSX format).</li>
+            <li>Configure your labels per the following settings:</li>
+            <ol>
+              <li><b>Avery Template</b>&nbsp;&nbsp;Specifies the Avery template format you'd like to print to. We currently support 5160, 9400/94207 templates.</li>
+              <li><b>Number of Labels per Move</b>&nbsp;&nbsp;Indicates the number of labels to create for each move in the report/Excel file. For example, if you specify "4", the Avery PDF output file will include 4 labels for each move.</li>
+            </ol>
+            <li>Click or tap "Upload Moves XLSX File" to upload and start the template generation process. Your Avery formatted PDF file will automatically download.</li>
+            <li>Load your printer with the same Avery template you chose. Print your Avery formatted PDF file.</li>
+            <li>Peel and stick to boxes, chairs and more!</li>
+          </ol>
+          <h3 class="ui header">Sample Files</h3>
+          <div style="margin-bottom: 0.5em;"><a href="https://s3.amazonaws.com/storage.officespacepowertools.com/sample-moves-report.xlsx" download><i style="color: green; font-size: 1.2em;" class="file excel outline icon"></i>Sample moves file</a>&nbsp;&nbsp;Download and try generating a move labels template!</div>
+          <div style="margin-bottom: 0.5em;"><a href="https://s3.amazonaws.com/storage.officespacepowertools.com/5160-avery-labels.pdf" download><i style="color: red; font-size: 1.2em;" class="file pdf outline icon"></i>Avery 5160 formatted labels</a>&nbsp;&nbsp;Try viewing and printing this sample labels file</div>
+          <div style="margin-bottom: 0.5em;"><a href="https://s3.amazonaws.com/storage.officespacepowertools.com/94200-avery-labels.pdf" download><i style="color: red; font-size: 1.2em;" class="file pdf outline icon"></i>Avery 94200 formatted labels</a>&nbsp;&nbsp;Try viewing and printing this sample labels file</div>
+        </div>
+        <div class="ui mini modal transition modal-invalid-upload">
+          <div class="header">
+              Upload Error
+          </div>
+          <div class="content">
+              <p>Sorry, you can only convert 1 file at a time and the maximum file size is 5 MB.</p>
+          </div>
+          <div class="actions">
+              <div class="ui positive approve right labeled icon button">
+              OK
+              <i class="checkmark icon"></i>
+              </div>
+          </div>
+      </div>
+      <iframe id="my_iframe" style="display:none;"></iframe>
+        <script>
+        function DownloadLabels(url) {
+            document.getElementById('my_iframe').src = url;
+        };
+        </script>
+    </body>
+</html>
